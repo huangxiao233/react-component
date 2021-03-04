@@ -1,6 +1,10 @@
-import { EventHandler, useState } from 'react';
+import { useState } from 'react';
 import styles from './index.less';
+import { createFromIconfontCN } from '@ant-design/icons';
 
+const MyIcon = createFromIconfontCN({
+  scriptUrl: '//at.alicdn.com/t/font_2400517_6wx3ns3u52n.js', // 在 iconfont.cn 上生成
+});
 export default function Rating() {
   //分数显示
   const [rating, setRating] = useState(0);
@@ -14,7 +18,9 @@ export default function Rating() {
   };
   const Star = (props: any) => {
     return (
-      <span star-id={props.starId}>{props.marked ? '\u2605' : '\u2606'}</span>
+      <span star-id={props.starId}>
+        <MyIcon type={props.marked ? 'icon-star' : 'icon-star1'} />
+      </span>
     );
   };
   return (
@@ -23,13 +29,18 @@ export default function Rating() {
       onMouseOut={() => {
         hoverOver(null);
       }}
-      onClick={(event) => {
-        setRating(
-          (event && event.target && event.target.getAttribute('star-id')) ||
-            rating,
-        );
-      }}
       onMouseOver={hoverOver}
+      onClick={(event) => {
+        console.log(
+          event.target.parentNode.parentNode.parentNode.getAttribute('star-id'),
+        );
+        if (event && event.target) {
+          let value = event.target.parentNode.parentNode.parentNode.getAttribute(
+            'star-id',
+          );
+          setRating(value);
+        }
+      }}
     >
       {Array.from({ length: 5 }, (item, index: number) => {
         return (
