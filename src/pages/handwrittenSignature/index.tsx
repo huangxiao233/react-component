@@ -4,13 +4,14 @@ import { useEffect, useRef, useState, useCallback } from 'react';
 interface canvasPros {
   width: number;
   height: number;
+  lineWidth: number;
 }
-type Coordinate = {
+interface Coordinate {
   x: number;
   y: number;
-};
+}
 
-const HandwrittenSignaturePage = ({ width, height }: canvasPros) => {
+const HandwrittenSignaturePage = ({ width, height, lineWidth }: canvasPros) => {
   const canvasRef = useRef<HTMLCanvasElement>(null);
   const [isPainting, setisPainting] = useState(false);
   const [mousePosition, setMousePosition] = useState<Coordinate | undefined>(
@@ -81,7 +82,7 @@ const HandwrittenSignaturePage = ({ width, height }: canvasPros) => {
     console.log('drawline1');
     if (context) {
       console.log('drawline2');
-      context.lineWidth = 6;
+      context.lineWidth = lineWidth;
       context.strokeStyle = 'black';
       context.lineCap = 'round';
       context.lineJoin = 'round';
@@ -104,15 +105,37 @@ const HandwrittenSignaturePage = ({ width, height }: canvasPros) => {
     };
   };
 
+  const clearAll = (width: number, height: number) => {
+    if (!canvasRef.current) return;
+    const canvas: HTMLCanvasElement = canvasRef.current;
+    const context = canvas.getContext('2d');
+    if (context) {
+      console.log(width, height, 'clear');
+      context.clearRect(0, 0, width, height);
+    }
+  };
+
+  const clear = useCallback(() => {
+    clearAll(width, height);
+  }, [width, height]);
+
   return (
     <div className={styles.signature}>
+      <button
+        onClick={() => {
+          clear();
+        }}
+      >
+        清除
+      </button>
       <canvas ref={canvasRef} height={height} width={width}></canvas>
     </div>
   );
 };
 
-// HandwrittenSignaturePage.defaultProps = {
-//   width: window.innerWidth,
-//   height: window.innerHeight,
-// };
+HandwrittenSignaturePage.defaultProps = {
+  width: 200,
+  height: 200,
+  lineWidth: 5,
+};
 export default HandwrittenSignaturePage;
