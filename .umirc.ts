@@ -20,10 +20,16 @@ export default defineConfig({
       component: '@/pages/handwrittenSignature/index',
     },
     {
-      path: '/dashboard/evaluation',
+      path: '/dashboard/rating',
       name: '星级评价组件',
       icon: 'dashboard',
-      component: '@/pages/evaluation/index',
+      component: '@/pages/rating/index',
+    },
+    {
+      path: '/dashboard/switch',
+      name: 'switch组件',
+      icon: 'dashboard',
+      component: '@/pages/switch/index',
     },
   ],
   fastRefresh: {},
