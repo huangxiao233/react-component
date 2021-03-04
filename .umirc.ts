@@ -31,6 +31,12 @@ export default defineConfig({
       icon: 'dashboard',
       component: '@/pages/switch/index',
     },
+    {
+      path: '/dashboard/dialog',
+      name: 'dialog组件',
+      icon: 'dashboard',
+      component: '@/pages/dialog/index',
+    },
   ],
   fastRefresh: {},
 });
