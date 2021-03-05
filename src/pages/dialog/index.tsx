@@ -7,15 +7,13 @@ export default function () {
   return (
     <>
       <div className={styles.huangUI_dialog}>
-        <Dialog visiable={visiable} />
-        <div
-          onClick={() => {
-            console.log(visiable, 'click');
+        <div>显示</div>
+        <Dialog
+          visiable={visiable}
+          close={() => {
             setVisiable(!visiable);
           }}
-        >
-          click
-        </div>
+        />
       </div>
     </>
   );

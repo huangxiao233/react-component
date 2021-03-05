@@ -3,17 +3,23 @@ import './index.less';
 
 interface Props {
   visiable: boolean;
+  close: Function;
 }
 const sc = scopeClassName('huangUI');
 
 const Dialog: React.FunctionComponent<Props> = (props) => {
   return props.visiable ? (
     <>
-      <div className={sc('mask')}></div>
+      <div
+        className={sc('mask')}
+        onClick={() => {
+          props.close();
+        }}
+      ></div>
       <div className={sc('dialogWapper')}>
-        <header>1</header>
-        <main>2</main>
-        <footer>3</footer>
+        <header>提示</header>
+        <main>主要内容</main>
+        <footer>脚部</footer>
       </div>
     </>
   ) : null;
