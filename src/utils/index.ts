@@ -4,7 +4,7 @@ function scopeClassName(preClassName: string) {
       .filter(() => {
         return Boolean(lastClassName);
       })
-      .join('_');
+      .join('-');
   };
 }
 

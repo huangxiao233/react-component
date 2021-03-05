@@ -24,4 +24,5 @@ const Dialog: React.FunctionComponent<Props> = (props) => {
     </>
   ) : null;
 };
+
 export default Dialog;
