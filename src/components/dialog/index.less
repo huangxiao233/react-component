@@ -1,15 +1,22 @@
-.huangUI {
-  &-dialogWapper {
-    position: fixed;
-    top: 50%;
-    left: 50%;
-    transform: translate(-50%, -50%);
-    width: 100px;
-    height: 100px;
-    background: #ffffff;
-    border: 2px solid rgba(0, 0, 0, 0);
+.huangUI-dialog {
+  padding: 20px;
+  z-index: 10;
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  background: #ffffff;
+  border: 2px solid rgba(0, 0, 0, 0);
+
+  &-main {
+    width: 200px;
+  }
+  &-footer {
+    text-align: right;
   }
   &-mask {
+    position: absolute;
+    z-index: 1;
     top: 0;
     left: 0;
     width: 100%;

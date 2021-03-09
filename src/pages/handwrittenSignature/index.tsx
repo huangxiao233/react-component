@@ -23,7 +23,7 @@ export default function () {
       >
         下载
       </button>
-      <HandwrittenSignaturePage />
+      <HandwrittenSignaturePage width={300} height={300} />
     </>
   );
 }
