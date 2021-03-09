@@ -21,7 +21,7 @@ export default function () {
         >
           warn
         </div>
-        <Dialog
+        {/* <Dialog
           buttons={[<button>1</button>, <button>2</button>]}
           visiable={visiable}
           onClose={() => {
@@ -29,7 +29,7 @@ export default function () {
           }}
         >
           <h1>123</h1>
-        </Dialog>
+        </Dialog> */}
       </div>
     </>
   );
