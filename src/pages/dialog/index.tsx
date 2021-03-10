@@ -1,8 +1,20 @@
-import Dialog, { alert, warn } from '@/components/dialog';
+import Dialog, { alert, warn, modal } from '@/components/dialog';
 import styles from './index.less';
 import React, { useState } from 'react';
 
 export default function () {
+  const openModal = () => {
+    const close = modal('123', [
+      <button
+        key="1"
+        onClick={() => {
+          close();
+        }}
+      >
+        close
+      </button>,
+    ]);
+  };
   return (
     <>
       <div className={styles['huangUI-dialog']}>
@@ -29,6 +41,7 @@ export default function () {
         >
           warn
         </div>
+        <div onClick={openModal}>modal</div>
       </div>
     </>
   );

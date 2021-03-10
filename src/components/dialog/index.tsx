@@ -46,7 +46,7 @@ const Dialog: React.FunctionComponent<Props> = (props) => {
 };
 
 const modal = (
-  content?: string,
+  content: ReactNode,
   buttons?: Array<ReactElement>,
   headerText?: string,
   enableClick?: boolean,
@@ -120,5 +120,5 @@ Dialog.defaultProps = {
   cancelText: 'cancel',
   headerText: 'modal',
 };
-export { alert, warn };
+export { alert, warn, modal };
 export default Dialog;
