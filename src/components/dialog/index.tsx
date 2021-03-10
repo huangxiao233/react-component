@@ -1,12 +1,12 @@
 import { scopeClassName } from '@/utils';
-import React, { ReactElement } from 'react';
+import React, { Children, ReactElement, ReactNode } from 'react';
 import ReactDOM from 'react-dom';
 import './index.less';
 
 interface Props {
   headerText?: String;
   cancelText?: String;
-  invalidClick?: Boolean; //点击MASK无用
+  enableClick?: Boolean | undefined; //点击MASK无用
   visiable: Boolean;
   onClose: Function;
   buttons?: Array<ReactElement>;
@@ -23,7 +23,7 @@ const Dialog: React.FunctionComponent<Props> = (props) => {
       <div
         className={sc('mask')}
         onClick={() => {
-          if (props.invalidClick) return;
+          if (props.enableClick) return;
           maskClick();
         }}
       />
@@ -31,21 +31,13 @@ const Dialog: React.FunctionComponent<Props> = (props) => {
         <header className={sc('header')}>{props.headerText}</header>
         <main className={sc('main')}>{props.children}</main>
         <footer className={sc('footer')}>
-          {props.buttons ? (
+          {props.buttons &&
+            props.buttons.length > 0 &&
             props.buttons.map((button, index) => {
               return React.cloneElement(button, {
                 key: index,
               });
-            })
-          ) : (
-            <button
-              onClick={() => {
-                props.onClose();
-              }}
-            >
-              {props.cancelText}
-            </button>
-          )}
+            })}
         </footer>
       </div>
     </>
@@ -53,73 +45,78 @@ const Dialog: React.FunctionComponent<Props> = (props) => {
   return ReactDOM.createPortal(result, document.body);
 };
 
-const alert = () => {
+const modal = (
+  content?: string,
+  buttons?: Array<ReactElement>,
+  headerText?: string,
+  enableClick?: boolean,
+) => {
   const close = () => {
     ReactDOM.render(React.cloneElement(component, { visible: false }), div);
     ReactDOM.unmountComponentAtNode(div);
     div.remove();
   };
-  const confirmCallBack = () => {};
 
   const component = (
     <Dialog
-      headerText="confirm"
-      buttons={[
-        <button
-          onClick={() => {
-            close();
-          }}
-        >
-          cancel
-        </button>,
-        <button
-          onClick={() => {
-            close();
-          }}
-          style={{ marginLeft: '10px' }}
-        >
-          confirm
-        </button>,
-      ]}
+      enableClick={enableClick}
+      headerText={headerText}
+      buttons={buttons}
       visiable={true}
       onClose={() => {
         close();
       }}
     >
-      <h1>{'confirm'}</h1>
+      {content}
     </Dialog>
   );
   const div: any = document.createElement('div');
   document.body.append(div);
   ReactDOM.render(component, div);
+  return close;
 };
-
-const warn = () => {
-  const close = () => {
-    ReactDOM.render(React.cloneElement(component, { visible: false }), div);
-    ReactDOM.unmountComponentAtNode(div);
-    // 如果没有这一句,div 会愈来越多
-    div.remove();
+const alert = (
+  content: string,
+  headerText: string,
+  yes?: Function,
+  no?: Function,
+) => {
+  const onYes = () => {
+    close();
+    yes && yes();
   };
+  const onNo = () => {
+    close();
+    no && no();
+  };
+  const button = [
+    <button onClick={onYes}>OK</button>,
+    <button onClick={onNo}>No</button>,
+  ];
+  const close = modal(content, button, headerText);
+};
 
-  const component = (
-    <Dialog
-      headerText="warn"
-      invalidClick={true}
-      visiable={true}
-      onClose={() => {
+const warn = (content?: string, headerText?: string) => {
+  const enableClick = true;
+  const button = [
+    <button
+      onClick={() => {
         close();
       }}
     >
-      <h1>{'waring'}</h1>
-    </Dialog>
+      i konw
+    </button>,
+  ];
+  const close = modal(
+    content || 'warn',
+    button,
+    headerText || 'warn',
+    enableClick,
   );
-  const div: any = document.createElement('div');
-  document.body.append(div);
-  ReactDOM.render(component, div);
 };
+
 Dialog.defaultProps = {
-  invalidClick: false,
+  enableClick: false,
   cancelText: 'cancel',
   headerText: 'modal',
 };
