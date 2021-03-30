@@ -1,6 +1,5 @@
 import Dialog, { alert, warn, modal } from '@/components/dialog';
 import styles from './index.less';
-import React, { useState } from 'react';
 
 export default function () {
   const openModal = () => {
